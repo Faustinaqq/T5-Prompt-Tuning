@@ -2,24 +2,38 @@
 
 本代码实现了在BoolQ数据集上，使用T5模型微调预测答案得功能。支持得微调主要包括：
 
-1. Fine Tuning T5模型Decoder最后两层
+1. Fine Tuning T5模型Decoder最后两层，也即轻量级微调
 
-2. Prompt Tuning，在输入前加入soft prompt：
+2. Prompt Tuning，在输入X前加入soft prompt：
 ![1](./image/prompt-tuning.png)
 
 
-3. Changed Prompt Tuning, Prompt Tuning的改进，考虑Prompt Tuning的初始化方法，输入出现在prompt中的token和prompt保持一致，结构如下：
+3. Changed Prompt Tuning, Prompt Tuning的改进，考虑Prompt Tuning的初始化方法，输入X中现在prompt中的token经过prompt 的embedding，结构如下：
 ![2](./image/changed-prompt-tuning.png)
+
+## 安装
+
+在使用之前，请确保你已经安装了以下依赖：
+
+```
+    torch 1.9.0
+    tqdm 4.65.0
+    logging 0.5.1.2
+    numpy 1.21.5
+    argparse 1.1
+    datasets 2.12.0
+    transformers 4.30.2
+```
 
 ## 参数
 
 以下说明本程序中的部分参数：
 ```
-model: 可选 t5-small, t5-base, t5-large
-ft_way：微调方式，可选fine_tune, prompt
-changed: 是否在prompt tuning基础上改进，为1为改进
-init_class: 选择prompt tuning是prompt embedding的初始化方法
---log_file: 日志文件名称
+    model: 可选 t5-small, t5-base, t5-large
+    ft_way：微调方式，可选fine_tune, prompt
+    changed: 是否在prompt tuning基础上改进，为1为改进
+    init_class: 选择prompt tuning是prompt embedding的初始化方法
+    log_file: 日志文件名称
 ```
 
 ## 运行代码
@@ -36,6 +50,7 @@ CUDA_VISIBLE_DEVICES=5 python main.py --model t5-small  --batch_size 16 --log_fi
 
 使用t5-small:
 ![3](./image/result1.png)
+
 使用t5-large:
 ![4](./image/result2.png)
 
@@ -91,3 +106,6 @@ CUDA_VISIBLE_DEVICES=5 python main.py --model t5-small  --batch_size 16 --log_fi
 | Fine Tuning  | 33,560,576 | 80.76   |
 | Prompt Tuning | 51,200   | 81.01   |
 | Changed      | 51,200   | 82.01   |
+
+## 结论
+Prompt Tuning 方法及其改进方法，在只需要微调轻量级微调参数 1.5%（51200/33560576）的情况下，Prompt 性能就能够超过轻量级微调的性能
