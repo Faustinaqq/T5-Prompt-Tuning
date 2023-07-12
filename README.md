@@ -48,14 +48,13 @@ CUDA_VISIBLE_DEVICES=5 python main.py --model t5-small  --batch_size 16 --log_fi
 
 训练过程中部分结果截图：
 
-使用t5-small:
-
-![3](./image/result1.png)
-
-
 使用t5-large:
 
-![4](./image/result2.png)
+![4](./image/result1.png)
+
+
+评价过程中部分结果打印：
+![5](./image/result2.png)
 
 
 #### 1. 在BoolQ数据集微调T5模型Decoder后两层，最终的结果
