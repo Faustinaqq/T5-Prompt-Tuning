@@ -39,10 +39,9 @@
 ## 运行代码
 
 ```
-CUDA_VISIBLE_DEVICES=5 python main.py --model t5-small  --batch_size 16 --log_file log.txt \
---lr 5e-04 --prompt_len 100 --ft_way prompt --changed 0 --init class_label
+CUDA_VISIBLE_DEVICES=5 python main.py --model t5-large  --batch_size 16 --log_file log.txt \
+--lr 2e-04 --prompt_len 50 --ft_way prompt --changed 0 --init class_label
 ```
-
 
 ## 结果
 
@@ -87,10 +86,11 @@ CUDA_VISIBLE_DEVICES=5 python main.py --model t5-small  --batch_size 16 --log_fi
 
 #### 3. 在BoolQ数据集上T5模型使用Changed Prompt Tuning微调
 （1）固定prompt 长度为50， 使用不同的初始化方法微调的准确率（Accuracy）
-| 初始化方法     | t5-large  |
-|----------------|-----------|
-| Random Vocab   | 81.39     |
-| Class Label    | 82.01     |
+| 初始化方法    | 原提示微调 | 改进后提示微调 |
+|--------------|-----------|---------------|
+| Random Vocab | 81.19     | 81.22         |
+| Class Label  | 81.01     | 82.01         |
+
 
 (2) 初定初始化方法为Class Label, 使用不同的prompt长度微调的准确率（Accuracy）
 
@@ -110,4 +110,4 @@ CUDA_VISIBLE_DEVICES=5 python main.py --model t5-small  --batch_size 16 --log_fi
 | Changed      | 51,200   | 82.01   |
 
 ## 结论
-Prompt Tuning 方法及其改进方法，在只需要微调轻量级微调参数 1.5%（51200/33560576）的情况下，Prompt 性能就能够超过轻量级微调的性能
+Prompt Tuning 方法及其改进方法，在只需要微调轻量级微调参数 0.153%（51200/33560576）的情况下，Prompt 性能就能够超过轻量级微调的性能
